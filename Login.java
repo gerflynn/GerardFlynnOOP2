@@ -6,9 +6,11 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class Login extends JFrame{
-	JTextField nameField;		//make private????? or pubilc
+	JTextField nameField;		//make private?????
 	JPasswordField passField;
 	static int attempts=0;
+	
+	Account a1 = new Account("user","p",0);
 	
 	public static void main(String args[]){
 		Login gui = new Login();
@@ -17,15 +19,10 @@ public class Login extends JFrame{
 	
 	public Login(){
 		super("Login");
-		createWindow();
-			
-	}
-	public void createWindow(){
-		//JWindow window = new JWindow();
 		setLayout(new FlowLayout());
 		setSize(320,200);
 		setLocation(400,300);
-		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
 		
 		JLabel nameLabel = new JLabel("Please enter your username:");
@@ -40,25 +37,26 @@ public class Login extends JFrame{
 		passField = new JPasswordField(15);
 		add(passField);
 		passField.addActionListener(handler);
+			
 	}
 	
 	private class TextFieldEventHandler implements ActionListener{
 		public void actionPerformed(ActionEvent e){
 			String name = nameField.getText();
 			
-			if(e.getSource() == nameField){
-				passField.requestFocus();
+			if(e.getSource() == nameField){	//when the user hits enter on the username field...
+				passField.requestFocus();	//...neat way to point the cursor to the password field
 			}
 			if(e.getSource() == passField){
-				char[] jpassword = passField.getPassword();//JPasswordField returns array of chars
-				String password = new String(jpassword);
+				char[] jpassword = passField.getPassword(); //JPasswordField returns array of chars
+				String password = new String(jpassword);	//Building a String out of this array
 				
-				if(name.equalsIgnoreCase("user") && password.equals("p")){
+				if(name.equalsIgnoreCase(a1.getUsername()) && password.equals(a1.getPassword())){
 					JOptionPane.showMessageDialog(null,"Welcome to the system ",
 					"Success!",JOptionPane.INFORMATION_MESSAGE);
 					setVisible(false);
-					//MainGUI m1 = new MainGUI();
-					new MainGUI();
+					MainGUI m1 = new MainGUI();
+					m1.setVisible(true);
 				}
 				else{
 					JOptionPane.showMessageDialog(null,"Invalid username/passsword combination\n\n" +

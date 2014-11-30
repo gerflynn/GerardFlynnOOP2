@@ -5,12 +5,11 @@ import javax.swing.*;
 public class Account{
 	//attributes
 	private String username;
-	private String password;	//char[]
-	//private Race score;
+	private String password;	//char[]	//private Race score;
 	private double balance;
 	
 	public Account(){
-		this("username","p",0);
+		this("user","p",0);
 	}
 	public Account(String username, String password, double balance){
 		this.username = username;
@@ -45,16 +44,14 @@ public class Account{
 		balance += lodgement;
 	}
 	
-	//driver for new account
-	
 	//decriment stake
 	public void decrimentStake(int stake){
-		//validation error here?
+		//validation here?
 		balance -= stake;
 	}
 	//increment winnings
 	public void incrementWinnings(int winnings){
-		balance =+ winnings;
+		balance += winnings;
 	}
 	
 	//return details toString method

@@ -10,7 +10,6 @@ public class MainGUI extends JFrame{
 	
 	public static void main(String args[]){
 		
-		//new Login();
 		MainGUI gui = new MainGUI();
 		gui.setVisible(true);
 	}
@@ -26,33 +25,23 @@ public class MainGUI extends JFrame{
 		menu = new JMenuBar();	
 		setJMenuBar(menu);
 		createMenus();
-		//addWindowListener
 	}
 	
 	public void createMenus(){
 		//Manage Accounts
 		MenuEventHandler handler = new MenuEventHandler();
-		JMenu acc = new JMenu("Accounts");
-		menu.add(acc);
-		/*JMenuItem create = new JMenuItem("New");
-		acc.add(create);
-		create.addActionListener(handler);*/
-		JMenuItem login = new JMenuItem("Login");
-		acc.add(login);
-		login.addActionListener(handler);
-		acc.addSeparator();
-		JMenuItem quit = new JMenuItem("Quit");
-		acc.add(quit);
-		quit.addActionListener(handler);
-		
-		//Manage Balance
-		JMenu balance = new JMenu("Balance");
-		menu.add(balance);
+		JMenu account = new JMenu("Account");
+		menu.add(account);
 		JMenuItem view = new JMenuItem("View");
-		balance.add(view);
+		account.add(view);
+		view.addActionListener(handler);
 		JMenuItem update = new JMenuItem("Update");
-		balance.add(update);
+		account.add(update);
 		update.addActionListener(handler);
+		account.addSeparator();
+		JMenuItem quit = new JMenuItem("Quit");
+		account.add(quit);
+		quit.addActionListener(handler);
 		
 		//Manage Races
 		JMenu play = new JMenu("Play");
@@ -66,8 +55,14 @@ public class MainGUI extends JFrame{
 	private class MenuEventHandler implements ActionListener{
 		public void actionPerformed(ActionEvent e){
 			
-			if(e.getActionCommand().equals("Login")){
-				new Login();
+			//Balance Handlers
+			if(e.getActionCommand().equals("View")){
+				//view account details
+			}
+			if(e.getActionCommand().equals("Update")){
+				//Calls UpdateBalance method
+				String[] args={};
+				UpdateBalance.main(args);
 			}
 			if(e.getActionCommand().equals("Quit")){
 				int confirm = JOptionPane.showConfirmDialog(null,"Are you sure you want to logout?",
@@ -76,38 +71,7 @@ public class MainGUI extends JFrame{
 					System.exit(0);						//or save and return to jframe
 			}
 			
-			//Balance Handlers
-			if(e.getActionCommand().equals("View")){
-				/*Using BufferedReader*/
-        /*
-        BufferedReader bufReader = new BufferedReader(new FileReader("data.txt"));
-		String str;
-	
-		str = bufReader.readLine();
-		int n = Integer.parseInt(str);
-		System.out.println("Int was " + n);
-		//str = bufReader.readLine();
-    	//System.out.println("String was " + str);
-    	str = bufReader.readLine();
-    	boolean b = Boolean.parseBoolean(str);
-    	System.out.println("Boolean was " + b);
-    	str = bufReader.readLine();
-    	double d = Double.parseDouble(str);
-    	System.out.println("Double was " + d);
-
-		bufReader.close();
-		*/
-		
-				//view account
-			}
-			if(e.getActionCommand().equals("Update")){
-				String[] args={};
-				UpdateBalance.main(args);
-				//validate login
-			}
-			
 			//Race Handlers
-			
 			if(e.getActionCommand().equals("Place Bet")){
 				//validate login & balance
 				new PlaceBet();
