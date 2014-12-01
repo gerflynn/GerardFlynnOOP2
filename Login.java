@@ -14,7 +14,7 @@ public class Login extends JFrame{
 	
 	public static void main(String args[]){
 		Login gui = new Login();
-		//gui.setVisible(true);
+		gui.setVisible(true);
 	}
 	
 	public Login(){
@@ -23,7 +23,7 @@ public class Login extends JFrame{
 		setSize(320,200);
 		setLocation(400,300);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setVisible(true);
+		//setVisible(true);
 		
 		JLabel nameLabel = new JLabel("Please enter your username:");
 		add(nameLabel);	
