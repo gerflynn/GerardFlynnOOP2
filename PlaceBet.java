@@ -1,5 +1,10 @@
 //PlaceBet.java
-/**/
+/*This class is triggered from a successful login
+ *This in turn loads the previous progress of the user
+ *Also provides:
+ *	An interface to the user to manage account
+ *	The main processing element of gambling on a horse
+ *	Saves progress*/
 
 import javax.swing.*;
 import java.awt.event.*;
@@ -10,13 +15,13 @@ import java.io.*;	//for i/o
 public class PlaceBet extends JFrame{
 	
 	//Global Variables
-	JMenuBar menu;
-	JComboBox combobox;
-	JButton button1;
-	JButton button2;
-	JButton button3;
-	JButton button4;
-	JButton button5;
+	private JMenuBar menu;
+	private JComboBox combobox;
+	private JButton button1;
+	private JButton button2;
+	private JButton button3;
+	private JButton button4;
+	private JButton button5;
 	
 	static ArrayList<Integer> results;	//ArrayList returned from Race() method
 	JTextArea resultSheet;
@@ -42,10 +47,11 @@ public class PlaceBet extends JFrame{
 	public PlaceBet(){
 		super("Place Your Bet!!");
 		setLayout(new FlowLayout());
-		setSize(340,700);
+		//setSize(340,700);
+		setSize(400,700);
 		setResizable(false);
 		setLocation(600,20);
-		//setBackground(Color.GREY);		//ContentPane
+		getContentPane().setBackground(Color.GRAY);		//ContentPane
 		
 		//call to read balance
 		try{
@@ -88,39 +94,72 @@ public class PlaceBet extends JFrame{
 													   5,h5.getName(),h5.getOdds().toString()));
 		add(textArea);
 		
+		
+		//######################################Create Master JPanel#######################################
+		JPanel masterPanel = new JPanel();
+		masterPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 30, 20));	//align, horizontal gap, vertical gap
+		add(masterPanel);
+		
+		
 		//JLabel, JCombobox and JButtons to offer betting options
-			//JLabel just display's euro symbol
-		JLabel euroSymbol = new JLabel("€");
-		add(euroSymbol);
+			//JLabel informs purpose of JComboBox
+		JLabel euroSymbol = new JLabel("Set the Stake € ");
+		//add(euroSymbol);
+		
 			//JCombobox holds an array of Integers which are amounts to bet that the user can choose
 			//ToolTipText displays helpful information on hovering
 		Integer[] bets = {10,20,30,50,100};	//////////*********Reference 1**********//////////////
 		combobox = new JComboBox(bets);		//////////*********End Reference 1**********//////////
 		combobox.setSelectedIndex(2);//€30 option selected by default
 		combobox.addActionListener(handler);
-		add(combobox);
-		combobox.setToolTipText("Set Bet");
-			//JButtons to select a horse to bet on
+		//add(combobox);
+		
+			//JPanel to add JComboBox and JLabel
+		JPanel stakePanel = new JPanel();
+		stakePanel.setLayout(new GridLayout());
+		stakePanel.add(euroSymbol);
+		stakePanel.add(combobox);
+		//add(stakePanel);
+		
+			//Create JButtons to select a horse to bet on
 		button1 = new JButton("Horse 1");
-		add(button1);
 		button1.setToolTipText("Exterminator");
 		button1.addActionListener(handler);
+		
 		button2 = new JButton("Horse 2");
-		add(button2);
 		button2.setToolTipText("Storm Cat");
 		button2.addActionListener(handler);
+		
 		button3 = new JButton("Horse 3");
-		add(button3);
 		button3.setToolTipText("Thunder Hooves");
 		button3.addActionListener(handler);
+		
 		button4 = new JButton("Horse 4");
-		add(button4);
 		button4.setToolTipText("Geoff");
 		button4.addActionListener(handler);
+		
 		button5 = new JButton("Horse 5");
-		add(button5);
 		button5.setToolTipText("Odds On Favourite");
 		button5.addActionListener(handler);
+			//array of buttons
+//			private JButton buttonArray = {button1, button2, button3, button4, button5};
+		
+			//JPanel to add buttons to
+		JPanel buttonPanel = new JPanel();
+		buttonPanel.setLayout(new GridLayout(3, 2, 2, 2));	//rows, columns, horizontal gap, vertical gap
+		buttonPanel.add(button1);	//add to grid
+		buttonPanel.add(button2);
+		buttonPanel.add(button3);
+		buttonPanel.add(button4);
+		buttonPanel.add(button5);
+		//add(buttonPanel);
+		
+		
+		//Add Labels to megaLabel#####################################################################
+		//masterPanel.add(textArea);
+		masterPanel.add(stakePanel);
+		masterPanel.add(buttonPanel);
+		
 		
 		//2nd JTextArea to return the results as they occur
 		resultSheet = new JTextArea();
@@ -336,52 +375,22 @@ public class PlaceBet extends JFrame{
 	}//End Race Method
 	
 	
-	//method to validate the amount entered is a number
+	//isValidAmount method to validate the amount entered is a number
 	/*try to parse is at as double
 	 *if it cant then re-enter rather than crashing
-	 *use try catch as is quicker than searching characters*/
-	
-	//**************************throw exception for cancel button
-	
+	 *use try catch as is quicker than searching characters*/		//**************************throw exception for cancel button
 	public static boolean isValidAmount(String lodgement){
 		//if statement to check for negative value which would pass the parse test
 		if(lodgement.charAt(0) == '-')
-			return false;
+			return false;	//dont want negative values entered as lodgements
 		else{
 			try{
 				Double.parseDouble(lodgement);
 			}	
-			catch(NumberFormatException e){
-				return false;
+			catch(NumberFormatException e){	//if it cant be parsed as a number then it is invalid
+				return false;				//return false to trigger re-enter message
 			}
 		}
 		return true;
-	}
-//	public void saveData(double saveBal) throws IOException, FileNotFoundException{
-//		File outFile = new File("data.dat");
-//	    FileOutputStream fos = new FileOutputStream(outFile);
-//	    DataOutputStream dos = new DataOutputStream(fos);
-//	    
-//	    dos.writeDouble(saveBal);
-//	    System.out.print("\n\t" + saveBal);
-//	    dos.close();
-//	    
-//	}
-//	public double readData() throws IOException, FileNotFoundException{
-//		double setBal=0;
-//		try{
-//			File inFile = new File("data.dat");
-//			FileInputStream fis = new FileInputStream(inFile);
-//			DataInputStream dis = new DataInputStream(fis);
-//			
-//			setBal = dis.readDouble();
-//			System.out.print("\n\t" + setBal);
-//			dis.close();
-//		}
-//		
-//		catch(Exception e){
-//			e.printStackTrace();
-//		}
-//		return setBal;
-//	}
-}
+	}//End isValidAmount Method
+}//End PlaceBet Class
