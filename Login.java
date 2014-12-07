@@ -6,24 +6,30 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class Login extends JFrame{
-	JTextField nameField;		//make private?????
-	JPasswordField passField;
-	static int attempts=0;
 	
-	Account a1 = new Account("user","p",0);
+	//Global Variables also needed in Event Handling Class
+	private JTextField nameField;
+	private JPasswordField passField;
+	private static int attempts=0;
 	
+	Account a1 = new Account("user","p",0,0,0);
+	
+	//Main Method
 	public static void main(String args[]){
 		Login gui = new Login();
 		gui.setVisible(true);
-	}
+	}//End Main
 	
+	//Constructor
 	public Login(){
-		super("Login");
+		super("Login");	//extends to JFrame super class
 		setLayout(new FlowLayout());
-		setSize(320,200);
+		setSize(320,150);
+		setResizable(false);
 		setLocation(400,300);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		//setVisible(true);
+		getContentPane().setBackground(Color.WHITE);
+		setIconImage(new ImageIcon("H:\\OOP Project\\horse.png").getImage());
 		
 		JLabel nameLabel = new JLabel("Please enter your username:");
 		add(nameLabel);	
@@ -38,8 +44,9 @@ public class Login extends JFrame{
 		add(passField);
 		passField.addActionListener(handler);
 			
-	}
+	}//End Constructor
 	
+	//Event Handler Class
 	private class TextFieldEventHandler implements ActionListener{
 		public void actionPerformed(ActionEvent e){
 			String name = nameField.getText();
@@ -55,8 +62,8 @@ public class Login extends JFrame{
 					JOptionPane.showMessageDialog(null,"Welcome to the system ",
 					"Success!",JOptionPane.INFORMATION_MESSAGE);
 					setVisible(false);
-					MainGUI m1 = new MainGUI();
-					m1.setVisible(true);
+					PlaceBet pb = new PlaceBet();
+					pb.setVisible(true);
 				}
 				else{
 					JOptionPane.showMessageDialog(null,"Invalid username/passsword combination\n\n" +
@@ -66,7 +73,7 @@ public class Login extends JFrame{
 						System.exit(0);
 				}
 					
-			}	
-		}
-	}
-}
+			}//End of JPasswordField overriding methods	
+		}//End ActionPerformed Methods
+	}//End Event Handling
+}//End Login Class

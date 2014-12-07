@@ -1,13 +1,14 @@
-/**/
-
-//import javax.swing.*;
+//Horse.java
+/*This is an instantiable class.
+ *It provides methods to create a Horse and manage his details
+ *It calls a nested class Wager which provides methods for setting the odds of each horse*/
 
 public class Horse{
-	//attributes
+	//Attributes
 	private String name;
 	private Wager odds;
 	
-	//constructors
+	//Constructors
 	public Horse(){
 		name = "name";
 		odds = new Wager();
@@ -17,40 +18,19 @@ public class Horse{
 		odds = new Wager(numerator, denominator);
 	}
 	
-	//accessor
+	//Accessor Methods
 	public String getName(){
 		return name;
 	}
 	public Wager getOdds(){
 		return odds;
 	}
-	//mutator
+	
+	//Mutator Methods
 	public void setName(String name){
 		this.name = name;
 	}
 	public void setOdds(int numerator, int denominator){
 		odds.setNewOdds(numerator, denominator);
 	}
-	
-	//method
-	public void decreaseOdds(int numerator){
-		numerator++;
-	}
-	/*
-	//toString() method
-	public String toString(){
-		return "Name: " + getName() + " Odds: " + odds.toString();
-	}
-	//nameToString() method
-	public String nameToString(){
-		return "Name: " + getName();
-	}
-	//oddsToString() method
-	public String oddsToString(){
-		return "Odds: " + odds.toString();
-	}*/
-	//numerator toString method
-//	public String numeratorToString(int numerator){
-//		return numerator.toString
-//	}
-}
+}//End Horse Class
