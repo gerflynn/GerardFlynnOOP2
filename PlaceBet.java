@@ -115,8 +115,8 @@ public class PlaceBet extends JFrame{
 			
 				//JCombobox holds an array of Integers which are amounts to bet that the user can choose
 				//ToolTipText displays helpful information on hovering
-			Integer[] bets = {10,20,30,50,100};	//////////*********Reference 1**********//////////////
-			combobox = new JComboBox(bets);		//////////*********End Reference 1**********//////////
+			Integer[] bets = {10,20,30,50,100};				//********Reference 1****//
+			combobox = new JComboBox(bets);					//****End Reference 1****//
 			combobox.setSelectedIndex(2);//€30 option selected by default
 			combobox.addActionListener(handler);
 			//add(combobox);
@@ -319,7 +319,7 @@ public class PlaceBet extends JFrame{
 			int i = 0;
 			switch(magicNumber){
 				case 0:
-					i = Character.getNumericValue(h1.getOdds().toString().charAt(0));	//Character.getNumericValue()//*******Reference 5*********//
+					i = Character.getNumericValue(h1.getOdds().toString().charAt(0));	//Character.getNumericValue()			//****Reference 2****//
 					break;
 				case 1:
 					i = Character.getNumericValue(h2.getOdds().toString().charAt(0));	//extracts the first character from the odds object
@@ -417,7 +417,7 @@ public class PlaceBet extends JFrame{
 	//isValidAmount method to validate the amount entered is a number
 	/*try to parse is at as double
 	 *if it cant then re-enter rather than crashing
-	 *use try catch as is quicker than searching characters*/		//**************************throw exception for cancel button
+	 *use try catch as is quicker than searching characters*/
 	public static boolean isValidAmount(String lodgement){
 		//if statement to check for negative value which would pass the parse test
 		if(lodgement.charAt(0) == '-')
